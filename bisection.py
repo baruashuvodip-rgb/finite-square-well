@@ -11,12 +11,17 @@ def find_sign_change(f, step, a, b):
 
 def bisection(f, pairs, tol):
     zeros = []
+    iter = 0
+    max_iter = 1000
     for a, b in pairs:
         if f(a) * f(b) >= 0:
             raise ValueError("f(a) and f(b) must have opposite signs")
         c = (a + b) / 2
-        while abs(f(c)) > tol:
-            if f(a) * f(c) < 0:
+        while abs(f(c)) > tol and iter < max_iter:
+            iter += 1
+            if iter >= max_iter:
+                break
+            elif f(a) * f(c) < 0:
                 b = c
             else:
                 a = c
